@@ -15,6 +15,11 @@ const App = () => {
         const nameObject = {
             name: newName,
         }
+
+        if (persons.some(person => person.name === newName)) {
+            return alert(`${newName} is already added to phonebook`)
+        }
+
         setPersons(persons.concat(nameObject))
         setNewName('')
     }
@@ -31,7 +36,6 @@ const App = () => {
                 </div>
             </form>
             <h2>Numbers</h2>
-            <div>debug: {newName}</div>
             {persons.map(person => <div key={person.name}>{person.name}</div>)}
         </div>
     )
