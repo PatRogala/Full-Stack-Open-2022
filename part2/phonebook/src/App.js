@@ -11,7 +11,7 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
-    //const [errorMessage, setErrorMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
 
     useEffect(() => {
@@ -61,10 +61,14 @@ const App = () => {
                         }, 3000)
                     })
                     .catch(() => {
-                        alert(
-                            `the person '${person.name}' was already deleted from server`
-                        )
                         setPersons(persons.filter(p => p.id !== person.id))
+                        setErrorMessage(
+                            `Information of ${newName} has already been removed from server`
+                        )
+
+                        setTimeout(() => {
+                            setErrorMessage(null)
+                        }, 3000)
                     })
             }
             return
@@ -91,14 +95,31 @@ const App = () => {
                 .deletePerson(person.id)
                 .then(() => {
                     setPersons(persons.filter(p => p.id !== person.id))
+                    setSuccessMessage(
+                        `Deleted ${person.name}`
+                    )
+                    setTimeout(() => {
+                        setSuccessMessage(null)
+                    }, 3000)
                 })
+                .catch(() => {
+                setPersons(persons.filter(p => p.id !== person.id))
+                setErrorMessage(
+                    `Information of ${person.name} has already been removed from server`
+                )
+
+                setTimeout(() => {
+                    setErrorMessage(null)
+                }, 3000)
+            })
         }
     }
 
     return (
         <div>
             <h2>Phonebook</h2>
-            <Notification message={successMessage}/>
+            <Notification message={successMessage} type="success" />
+            <Notification message={errorMessage} type="error" />
             <Filter filter={filter} setFilterChange={setFilterChange} />
 
             <h3>add a new</h3>
