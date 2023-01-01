@@ -3,12 +3,16 @@ import Filter from './components/Filter'
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import personService from './services/persons'
+import './css/index.css'
+import Notification from "./components/Notification";
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
+    //const [errorMessage, setErrorMessage] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null)
 
     useEffect(() => {
         personService
@@ -49,6 +53,12 @@ const App = () => {
                         setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
                         setNewName('')
                         setNewNumber('')
+                        setSuccessMessage(
+                            `Updated ${returnedPerson.name}`
+                        )
+                        setTimeout(() => {
+                            setSuccessMessage(null)
+                        }, 3000)
                     })
                     .catch(() => {
                         alert(
@@ -66,6 +76,12 @@ const App = () => {
                 setPersons(persons.concat(returnedPerson))
                 setNewName('')
                 setNewNumber('')
+                setSuccessMessage(
+                    `Added ${returnedPerson.name}`
+                )
+                setTimeout(() => {
+                    setSuccessMessage(null)
+                }, 3000)
             })
     }
 
@@ -82,6 +98,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={successMessage}/>
             <Filter filter={filter} setFilterChange={setFilterChange} />
 
             <h3>add a new</h3>
