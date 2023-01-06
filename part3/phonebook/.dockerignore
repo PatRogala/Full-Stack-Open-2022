@@ -3,4 +3,4 @@ Dockerfile
 .dockerignore
 node_modules
 .git
-/.env
+/part3/phonebook/.env.local
