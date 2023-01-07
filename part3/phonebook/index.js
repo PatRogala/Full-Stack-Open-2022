@@ -26,13 +26,13 @@ app.get('/api/persons', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const person = request.body
 
-    if (!person.name) {
+    if (person.name === undefined) {
         return response.status(400).json({
             error: 'name missing'
         })
     }
 
-    if (!person.number) {
+    if (person.number === undefined) {
         return response.status(400).json({
             error: 'number missing'
         })
