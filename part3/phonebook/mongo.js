@@ -10,7 +10,7 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-mongoose.connect(url).then(_ => {
+mongoose.connect(url).then(() => {
     console.log('connected to MongoDB')
 
     if (process.argv.length === 2) {
@@ -29,7 +29,7 @@ mongoose.connect(url).then(_ => {
             number: process.argv[3]
         })
 
-        person.save().then(_ => {
+        person.save().then(() => {
             console.log(`added ${person.name} number ${person.number} to phonebook`)
             mongoose.connection.close()
         })

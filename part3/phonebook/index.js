@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const app = express()
 const Person = require('./models/persons')
 
-morgan.token('body', function (req, _) { return JSON.stringify(req.body) })
+morgan.token('body', function (req) { return JSON.stringify(req.body) })
 
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
@@ -72,7 +72,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 app.delete('/api/persons/:id', (request, response, next) => {
     const id = request.params.id
 
-    Person.findByIdAndRemove(id).then(_ => {
+    Person.findByIdAndRemove(id).then(() => {
         response.status(204).end()
     }).catch(error => next(error))
 })
