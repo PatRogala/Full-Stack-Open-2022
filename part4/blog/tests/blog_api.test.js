@@ -34,6 +34,24 @@ test('blog has id property', async () => {
     expect(response.body[0].id).toBeDefined()
 })
 
+test('a valid blog can be added', async () => {
+    const newBlog = {
+        title: 'async/await simplifies making async calls',
+        author: 'me',
+        url: 'e',
+        likes: 9
+    }
+
+    await api.post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+    expect(blogsAtEnd[2].title).toBe('async/await simplifies making async calls')
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
