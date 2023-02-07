@@ -19,11 +19,11 @@ const Part = ({ part, exercises }) => {
 }
 
 const Total = ({ parts }) => {
-  const exercises = parts.map(part => part.exercises).reduce((a, b) => a + b)
+  const total = parts.reduce((sum, part) => sum + part.exercises, 0)
 
   return (
     <b>
-      total of {exercises} exercises
+      total of {total} exercises
     </b>
   )
 }
