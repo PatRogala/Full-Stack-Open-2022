@@ -1,16 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
@@ -24,11 +14,6 @@
       "name": "Patryk Rogala",
       "number": "213231232313",
       "id": 5
-    },
-    {
-      "name": "Popo",
-      "number": "elo",
-      "id": 6
     }
   ]
 }
