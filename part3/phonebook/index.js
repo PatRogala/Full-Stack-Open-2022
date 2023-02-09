@@ -26,6 +26,10 @@ let persons = [
   }
 ]
 
+const generateId = () => {
+  return Math.floor(Math.random() * 1000000)
+}
+
 app.get('/info', (request, response) => {
   response.send(
     `<p>Phonebook has info for ${persons.length} people</p>
@@ -36,10 +40,24 @@ app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+  }
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
+
 app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(person => person.id === id)
-  
+
   if (person) {
     response.json(person)
   } else {
