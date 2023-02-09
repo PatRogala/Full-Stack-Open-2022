@@ -1,10 +1,16 @@
 const express = require('express')
 const morgan = require('morgan')
 
+morgan.token('body', (request, response) => {
+  return JSON.stringify(request.body)
+})
+
 const app = express()
 
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan('tiny', { skip: (request, response) => request.method === 'POST' }))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body', 
+  { skip: (request, response) => request.method === 'GET' }))
 
 let persons = [
   {
