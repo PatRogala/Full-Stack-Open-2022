@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
-mongoose.set('strictQuery', false)
+mongoose.set('useFindAndModify', false)
 
 const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
 
-mongoose.connect(url)
+mongoose.connect(url, { useNewUrlParser: true })
   .then(result => {
     console.log('connected to MongoDB')
   })
@@ -17,9 +17,10 @@ mongoose.connect(url)
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
-    minLength: 5,
-    required: true
+    required: true,
+    minlength: 5
   },
+  date: Date,
   important: Boolean,
 })
 
