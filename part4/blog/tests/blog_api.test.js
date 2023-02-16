@@ -121,7 +121,6 @@ describe('updating blogs', () => {
     expect(updatedBlogInDb.likes).toBe(updatedBlog.likes)
   })
 })
-    
 
 afterAll(async () => {
   await mongoose.connection.close()
