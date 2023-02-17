@@ -100,6 +100,27 @@ describe('deleting blogs', () => {
     expect(titles).not.toContain(blogToDelete.title)
   })
 })
+
+describe('updating blogs', () => {
+  test('a blog can be updated', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+    const updatedBlog = {
+      ...blogToUpdate,
+      likes: blogToUpdate.likes + 1
+    }
+
+    await api.put(`/api/blogs/${blogToUpdate.id}`).send(updatedBlog).expect(200)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
+
+    const updatedBlogInDb = blogsAtEnd.find(blog => blog.id === blogToUpdate.id)
+
+    expect(updatedBlogInDb.likes).toBe(updatedBlog.likes)
+  })
+})
     
 
 afterAll(async () => {
