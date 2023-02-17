@@ -33,6 +33,20 @@ test('unique identifier property of the blog posts is named id', async () => {
   expect(response.body[0].id).toBeDefined()
 })
 
+test('a valid blog can be added ', async () => {
+  const newBlog = {
+    title: 'async/await simplifies making async calls',
+    author: 'Edsger W. Dijkstra',
+    url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+    likes: 5
+  }
+
+  await api.post('/api/blogs', newBlog)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
