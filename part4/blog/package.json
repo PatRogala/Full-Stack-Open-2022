@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "jest --verbose"
+    "test": "jest --verbose --runInBand"
   },
   "author": "",
   "license": "ISC",

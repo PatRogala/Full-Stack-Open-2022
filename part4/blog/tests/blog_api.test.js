@@ -41,7 +41,7 @@ test('a valid blog can be added ', async () => {
     likes: 5
   }
 
-  await api.post('/api/blogs', newBlog)
+  await api.post('/api/blogs').send(newBlog)
 
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
@@ -49,15 +49,37 @@ test('a valid blog can be added ', async () => {
 
 test('if the likes property is missing from the request, it will default to the value 0', async () => {
   const newBlog = {
-    title: 'async/await simplifies making async calls',
+    title: 'Blog without likes',
     author: 'Edsger W. Dijkstra',
     url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
   }
 
-  await api.post('/api/blogs', newBlog)
+  await api.post('/api/blogs').send(newBlog)
 
   const blogsAtEnd = await helper.blogsInDb()
-  expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toBe(0)
+  const addedBlog = blogsAtEnd.find(blog => blog.title === newBlog.title)
+
+  expect(addedBlog.likes).toBe(0)
+})
+
+test('if the title is missing responds with 400 Bad Request', async () => {
+  const newBlog = {
+    author: 'Edsger W. Dijkstra',
+    url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+    likes: 5
+  }
+
+  await api.post('/api/blogs').send(newBlog).expect(400)
+})
+
+test('if the url is missing responds with 400 Bad Request', async () => {
+  const newBlog = {
+    author: 'Edsger W. Dijkstra',
+    title: 'async/await simplifies making async calls',
+    likes: 5
+  }
+
+  await api.post('/api/blogs').send(newBlog).expect(400)
 })
 
 afterAll(async () => {
