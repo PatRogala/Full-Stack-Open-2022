@@ -33,23 +33,20 @@ blogsRouter.post('/', async (request, response) => {
     })
   }
 
-  const users = await User.find({})
-  const randomUser = users[Math.floor(Math.random() * users.length)]
-
   const blog = {
     title: body.title,
     author: body.author,
     url: body.url,
     likes: body.likes || 0,
-    user: randomUser._id
+    user: user._id
   }
 
   const blogModel = new Blog(blog)
 
   const savedBlog = await blogModel.save()
 
-  randomUser.blogs = randomUser.blogs.concat(savedBlog._id)
-  await randomUser.save()
+  user.blogs = user.blogs.concat(savedBlog._id)
+  await user.save()
 
   response.status(201).json(savedBlog)
 })
