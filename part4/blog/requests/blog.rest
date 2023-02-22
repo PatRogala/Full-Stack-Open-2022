@@ -4,6 +4,7 @@ GET http://localhost:3001/api/blogs
 ### Create a new blog
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdHJ5ayIsImlkIjoiNjNmNjhiMzlkMTQwYmRlZjg0NWEzOWVkIiwiaWF0IjoxNjc3MTAzMTY5fQ.3Dvy4P3cC4PGXj1eE75jvj1lH7Kx84S5TLSsyxQfxHw"
 
 {
   "title": "My first bloge",
