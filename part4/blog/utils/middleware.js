@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
+
 const tokenExtractor = (request, response, next) => {
   const authorization = request.get('authorization')
 
