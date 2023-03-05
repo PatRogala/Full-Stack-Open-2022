@@ -31,7 +31,6 @@ const App = () => {
     }
   }
 
-
   const loginForm = () => (
     <LoginForm handleLogin={handleLogin} username={username} password={password} setPassword={setPassword} setUsername={setUsername} />
   )
